@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/anthonylapham/node-weather-app#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "dotenv": "^6.1.0",
     "mongoose": "^5.3.13",
     "request": "^2.88.0"
