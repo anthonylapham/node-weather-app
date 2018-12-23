@@ -14,7 +14,8 @@ request({
   url:db,
   json: true
 }, (error, response, body) => {
-  console.log(`Address: ${body.results.providedLocation}`);
-  //console.log(`Longitude: ${body.results.latLng.lng}`);
-  //console.log(`Latitude: ${body.results.latling.lat}`);
+  const [results] = body.results;
+  console.log(`Address: ${results.providedLocation.location}`);
+  console.log(`Longitude: ${results.locations[0].latLng.lng}`);
+  console.log(`Latitude: ${results.locations[0].latLng.lat}`);
 });
