@@ -2,6 +2,21 @@ require('dotenv').config();
 const request = require('request');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const yargs = require('yargs');
+
+const argv = yargs
+  .options({
+    a: {
+      demand: true,
+      alias: 'address',
+      describe: 'Address to fetch weather for',
+      string: true
+    }
+
+  })
+  .help().alias('help', 'h').argv;
+
+  const encodedAddress = encodedURIComponent(argv.address);
 
 /*mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true
@@ -11,7 +26,7 @@ const bodyParser = require('body-parser');
 db.on('error', console.error.bind(console, 'connection error:'));*/
 
 request({
-  url:db,
+  url: `http://www.mapquestapi.com/geocoding/v1/address=${encodedAddress}`,
   json: true
 }, (error, response, body) => {
   const [results] = body.results;
