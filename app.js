@@ -16,7 +16,7 @@ const argv = yargs
   })
   .help().alias('help', 'h').argv;
 
-  const encodedAddress = encodedURIComponent(argv.address);
+  const encodedAddress = encodeURIComponent(argv.address);
 
 /*mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true
