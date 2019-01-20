@@ -1,3 +1,6 @@
+if (!process.env.NODE_ENV) {
+  require('dotenv').config();
+}
 const request = require('request');
 
 const geocodeAddress = (address) =>{
@@ -6,11 +9,13 @@ const geocodeAddress = (address) =>{
 
   return new Promise((resolve, reject) => {
     const encodedAddress = encodeURIComponent(address);
+    console.log('this is our key', process.env.KEY)
 
     request({
       url: `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.KEY}&location=${encodedAddress}`,
       json: true
     }, (error, response, body) => {
+      console.log('this is body in promise-2', body)
       const [results] = body.results;
       if (error) {
         reject("Unable to connect to Google servers");

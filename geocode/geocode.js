@@ -4,7 +4,7 @@ const geocodeAddress = (address, callback) => {
 
   const encodedAddress = encodeURIComponent(address);
 
-
+  console.log('this is muy key in geocode', process.env.KEY)
   request({
     url: `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.KEY}&location=${encodedAddress}`,
     json: true
