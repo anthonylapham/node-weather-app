@@ -1,10 +1,11 @@
 require('dotenv').config();
-/*const mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const yargs = require('yargs');
 const postcode = require('postcode-validator');
 
 const geocode = require('./geocode/geocode.js');
+const weather = require('./weather/weather.js');
 
 const argv = yargs
   .options({
@@ -19,27 +20,17 @@ const argv = yargs
   .help().alias('help', 'h').argv;
 
 geocode.geocodeAddress(argv.address, (errorMessage, results) => {
-    if(errorMessage){
-      console.log(errorMessage);
-    }else{
-      console.log(JSON.stringify(results, undefined, 2));
-    }
-});*/
-
-
-const request = require('request');
-
-request({
-  url: `https://api.darksky.net/forecast/${process.env.weatherAPI}/39.825622,-84.242664`,
-  json: true
-}, (error, response, body) => {
-  if(error){
-    console.log("Unable to get weather iformation");
-  }else{
-    console.log(`Temperature: ${body.currently.temperature}`);
-    console.log(`Longitude: ${body.longitude}`);
-    console.log(`Latitude: ${body.latitude}`);
+  if (errorMessage) {
+    console.log(errorMessage);
+  } else {
+    console.log(results.address);
+    weather.weatherAddress(results.latitude, results.longitude, (errorMessage, weatherResults) => {
+      if (errorMessage) {
+        console.log(errorMessage);
+      } else {
+        console.log(`It's currently ${weatherResults.temperature} degrees outside. It feels more like ${weatherResults.apparentTemperature}.`);
+      }
+    });
   }
-}
 
-)
+});

@@ -1,6 +1,6 @@
 const request = require('request');
 
- const geocodeAddress = (address, callback) => {
+const geocodeAddress = (address, callback) => {
 
   const encodedAddress = encodeURIComponent(address);
 
@@ -15,13 +15,13 @@ const request = require('request');
     } else if (results.locations[0].street === "") {
       callback("Unable to find location");
     } else {
-      const [results] = body.results;
-      console.log(`Address: ${results.providedLocation.location}`);
-      console.log(`Longitude: ${results.locations[0].latLng.lng}`);
-      console.log(`Latitude: ${results.locations[0].latLng.lat}`);
+      callback(undefined, {
+        address: results.providedLocation.location,
+        latitude: results.locations[0].latLng.lat,
+        longitude: results.locations[0].latLng.lng
+      });
     }
-
-  });
+    });
 
 }
 
