@@ -4,9 +4,14 @@ const bodyParser = require('body-parser');
 const yargs = require('yargs');
 const postcode = require('postcode-validator');
 const axios = require('axios');
+const path = require('path');
+const express = require('express');
 
-// const geocode = require('./geocode/geocode.js');
-// const weather = require('./weather/weather.js');
+const app = express();
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, 'public')));
 
 const argv = yargs
   .options({
@@ -47,18 +52,7 @@ axios.get(geocodeUrl).then((response) => {
 
 });
 
-// geocode.geocodeAddress(argv.address, (errorMessage, results) => {
-//   if (errorMessage) {
-//     console.log(errorMessage);
-//   } else {
-//     console.log(results.address);
-//     weather.weatherAddress(results.latitude, results.longitude, (errorMessage, weatherResults) => {
-//       if (errorMessage) {
-//         console.log(errorMessage);
-//       } else {
-//         console.log(`It's currently ${weatherResults.temperature} degrees outside. It feels more like ${weatherResults.apparentTemperature}.`);
-//       }
-//     });
-//   }
-//
-// });
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () =>{
+  console.log('Running on Port', PORT);
+})
